@@ -37,3 +37,5 @@ admin.env
 .env
 _meta
 .serverless
+
+.dynamodb
