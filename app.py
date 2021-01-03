@@ -10,15 +10,8 @@ app = Flask(__name__)
 CHURCHES_TABLE = os.environ['CHURCHES_TABLE']
 client = boto3.client('dynamodb')
 
-# dynamodb = boto3.resource('dynamodb', aws_access_key_id=AWS_ACCESS_KEY,aws_secret_access_key=AWS_SECRET_ACCESS_KEY,region_name="eu-west-2")
-# churches_table = dynamodb.Table(CHURCHES_TABLE)
-
-# AWS_ACCESS_KEY = os.getenv('KOS_AK')
-# AWS_SECRET_ACCESS_KEY = os.environ.get('KOS_SAK')
-
-# c = boto3.dynamodb2.connect_to_region(aws_access_key_id=AWS_ACCESS_KEY,aws_secret_access_key=AWS_SECRET_ACCESS_KEY,region_name="eu-west-2")
-# churches_table = Table(CHURCHES_TABLE,connection=c)
-
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table(CHURCHES_TABLE)
 
 @app.route("/")
 def hello():
@@ -44,5 +37,8 @@ def create_church():
         'name': church_name
     })
 
-  #  https://www.serverless.com/blog/flask-python-rest-api-serverless-lambda-dynamodb
-  # get all churches
+@app.route("/churches", methods=["GET"])
+def get_all_churches():
+    resp = table.scan()
+
+    return resp

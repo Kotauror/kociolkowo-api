@@ -1,3 +1,6 @@
+To run locally run 
+`sls wsgi serve`
+
 To deploy run 
 `sls deploy`
 
